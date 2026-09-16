@@ -34,7 +34,7 @@ export default function Navbar() {
                             <Link to="/authsign-in">
                                 <Button variant="ghost" size="sm">Sign In</Button>
                             </Link>
-                            <Link to="/authsign-in">
+                            <Link to="/authsign-up">
                                 <Button size="sm">Sign Up</Button>
                             </Link>
                         </>}

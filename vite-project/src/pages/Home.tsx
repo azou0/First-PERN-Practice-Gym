@@ -5,5 +5,10 @@
 //When a file has a default export, it can be imported without using curly braces and can be given any name during import. 
 // In this case, `Home` is the default export of the file, so when importing it in another file, you can do something like `import Home from './Home'` without needing to use curly braces.
 export default function Home() {
-    return <div>Home Page</div>;
+    return <div>
+              <h1 className="text-5xl text-accent">
+                Home Page
+              </h1>
+           </div>;
+    
 }

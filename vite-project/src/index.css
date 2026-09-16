@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+/*@import '@neondatabase/neon-js/ui/css';*/
 
 @theme {
   --font-sans: "Geist", system-ui, sans-serif;

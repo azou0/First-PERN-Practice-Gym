@@ -11,25 +11,29 @@ import Onboarding from "./pages/Onboarding"
 import Profile from "./pages/Profile"
 import Account from "./pages/Account"
 import Auth from "./pages/Auth"
+import { NeonAuthUIProvider } from "@neondatabase/neon-js/auth/react"
+import { authClient } from "./lib/neon"
 
 function App() {
   
   return (
-    <BrowserRouter>
-      <div className="min-h-screen flex flex-col">
-        <Navbar />
-        <main className="flex-1">
-        <Routes>
-          <Route index element={<Home />} />
-          <Route path="/onboarding" element={<Onboarding />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/account/:pathname" element={<Account />} />
-          <Route path="/auth/:pathname" element={<Auth />} />
-        </Routes>
-        </main>
-      </div>
-    </BrowserRouter>
-  )
+    <NeonAuthUIProvider authClient={authClient}>
+      
+        <div className="min-h-screen flex flex-col">
+          <Navbar />
+          <main className="flex-1">
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="/onboarding" element={<Onboarding />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/account/:pathname" element={<Account />} />
+            <Route path="/auth/:pathname" element={<Auth />} />
+          </Routes>
+          </main>
+        </div>
+      
+    </NeonAuthUIProvider>
+  );
 }
 
 export default App;
