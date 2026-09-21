@@ -1,5 +1,50 @@
 @import "tailwindcss";
-/*@import '@neondatabase/neon-js/ui/css';*/
+@import "@neondatabase/neon-js/ui/css";
+
+@theme {
+  --font-sans: "Geist", system-ui, sans-serif;
+
+  /* GymAI's specific colours */
+  --color-gym-background: #0a0a0a;
+  --color-gym-foreground: #fafafa;
+  --color-gym-muted: #a1a1aa;
+  --color-gym-border: #27272a;
+  --color-gym-card: #18181b;
+  --color-gym-accent: #a3e635;
+  --color-gym-accent-hover: #84cc16;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    background-color: var(--color-gym-background);
+    color: var(--color-gym-foreground);
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: var(--color-gym-background);
+    color: var(--color-gym-foreground);
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  #root {
+    min-height: 100vh;
+    background-color: var(--color-gym-background);
+    color: var(--color-gym-foreground);
+  }
+
+  [data-slot="skeleton"],
+  .animate-pulse {
+    background-color: var(--color-gym-border) !important;
+  }
+}
+
+/*@import "tailwindcss";
+@import '@neondatabase/neon-js/ui/css';
 
 @theme {
   --font-sans: "Geist", system-ui, sans-serif;
@@ -27,9 +72,10 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Override Better Auth skeleton colors */
+  /* Override Better Auth skeleton colors 
   [data-slot="skeleton"],
   .animate-pulse {
     background-color: var(--color-border) !important;
   }
 }
+*/  

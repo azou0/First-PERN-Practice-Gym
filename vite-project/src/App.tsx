@@ -13,12 +13,13 @@ import Account from "./pages/Account"
 import Auth from "./pages/Auth"
 import { NeonAuthUIProvider } from "@neondatabase/neon-js/auth/react"
 import { authClient } from "./lib/neon"
+import AuthProvider from "./context/AuthContext";
 
 function App() {
   
   return (
-    <NeonAuthUIProvider authClient={authClient}>
-      
+    <NeonAuthUIProvider authClient={authClient} defaultTheme="dark">
+      <AuthProvider>
         <div className="min-h-screen flex flex-col">
           <Navbar />
           <main className="flex-1">
@@ -31,7 +32,7 @@ function App() {
           </Routes>
           </main>
         </div>
-      
+      </AuthProvider>
     </NeonAuthUIProvider>
   );
 }
