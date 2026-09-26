@@ -7,6 +7,7 @@ import { Textarea } from "../components/ui/Textarea";
 import { Button } from "../components/ui/Button";
 import { ArrowRight, Loader2 } from "lucide-react";
 import type { UserProfile } from "../types";
+import { useNavigate } from "react-router-dom";
 
 const goalOptions = [
     { value: "bulk", label: "Build Muscle (Bulk)" },
@@ -51,7 +52,7 @@ const splitOptions = [
 ];
 
 export default function Onboarding() {
-    const { user, saveProfile } = useAuth();
+    const { user, saveProfile, generatePlan } = useAuth();
     const [formData, setFormData] = useState({
         goal: "bulk",
         experience: "intermediate",
@@ -62,26 +63,48 @@ export default function Onboarding() {
         preferredSplit: "upper_lower", 
     });
 
+    const [isGenerating, setIsGenerating] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
+    
+
     function updateForm(field: string, value: string) {
         setFormData((prev) => ({ ...prev, [field]: value }));
     }
 
     async function handleQuestionnaire(e: React.SubmitEvent) {
-        e.preventDefault();
+    e.preventDefault();
 
-        const profile: Omit<UserProfile, "userId" | "updatedAt"> = {
-            goal: formData.goal as UserProfile['goal'],
-            experience: formData.experience as UserProfile["experience"],
-            days_per_week: parseInt(formData.daysPerWeek),
-            sessionLength: parseInt(formData.sessionLength),
-            equipment: formData.equipment as UserProfile["equipment"],
-            injuries: formData.injuries || undefined,
-            preferredSplit: formData.preferredSplit as UserProfile["preferredSplit"],
-        };
+    const profile: Omit<UserProfile, "userId" | "updatedAt"> = {
+        goal: formData.goal as UserProfile["goal"],
+        experience: formData.experience as UserProfile["experience"],
+        days_per_week: parseInt(formData.daysPerWeek),
+        sessionLength: parseInt(formData.sessionLength),
+        equipment: formData.equipment as UserProfile["equipment"],
+        injuries: formData.injuries || undefined,
+        preferredSplit: formData.preferredSplit as UserProfile["preferredSplit"],
+    };
 
-        saveProfile(profile);
+    
+    setError(null);
+    setIsGenerating(true);
 
+    try {
+        await saveProfile(profile);
+        setIsGenerating(true);
+        await generatePlan();
+        navigate("/profile");
+    } catch (err) {
+        setError(
+            err instanceof Error
+                ? err.message
+                : "Failed to save profile"
+        );
+
+    } finally {
+        setIsGenerating(false);
     }
+}
 
     if (!user) {
         return <RedirectToSignIn />;
@@ -92,7 +115,7 @@ export default function Onboarding() {
                 <div className="max-w-xl mx-auto">
                 {/* Progress Indicator */}
                 {/* Step 1: Questionnaire */}
-                <Card variant="bordered">
+                {!isGenerating ? <Card variant="bordered">
                     <h1 className="text-2xl font-bold mb-2">Tell Us About Yourself</h1>
                     <p className="text-[var(--color-gym-muted)] mb-6">
                         Help us create the perfect plan for you.
@@ -164,8 +187,16 @@ export default function Onboarding() {
                                 </Button>
                             </div>
                     </form>
-                </Card>
+                </Card> : (
+                    <Card variant="bordered" className="text-center py-16">
                 {/* Step 2: AI generating */}
+                {/* <Loader2 className="w-12 h-12 text-[var(--color-accent)] mx-auto mb-6 animate-spin" /> */}
+                <Loader2 className="w-12 h-12 text-[var(--color-gym-accent)] mx-auto mb-6 animate-spin" />
+                <h1 className="text-2xl font-bold mb-2">Creating your Plan</h1>
+                <p className="text-[var(--color-gym-muted)]">Our AI is building your personalised training program.</p>
+                    </Card>
+                )}
+                
                 </div>
             </div>
         </SignedIn>
