@@ -10,10 +10,10 @@ function ExerciseRow({
   index: number;
 }) {
   return (
-    <tr className="border-b border-[var(--color-border)] last:border-0">
+    <tr className="border-b border-[var(--color-gym-border)] last:border-0">
       <td className="py-3 pr-4">
         <div className="flex items-start gap-3">
-          <span className="text-xs text-[var(--color-muted)] w-5">
+          <span className="text-xs text-[var(--color-gym-muted)] w-5">
             {index + 1}.
           </span>
           <div>
@@ -29,7 +29,7 @@ function ExerciseRow({
       </td>
 
       <td className="py-3 px-4 text-center whitespace-nowrap">
-        <span className="text-[var(--color-accent)] font-medium">
+        <span className="text-[var(--color-gym-accent)] font-medium">
           {exercise.sets}
         </span>
         <span className="text-[var(--color-muted)]"> x </span>
@@ -75,7 +75,7 @@ function DayCard({ schedule }: { schedule: DaySchedule }) {
         <table className="w-full text-sm">
           <thead>
             <tr className="text-[var(--color-muted)] text-xs uppercase tracking-wider">
-              <th className="text-left py-2 pr-4 font-medium">Excercise</th>
+              <th className="text-left py-2 pr-4 font-medium">Exercise</th>
               <th className="py-2 px-4 font-medium">Sets x Reps</th>
               <th className="py-2 px-4 font-medium">Rest</th>
               <th className="py-2 px-4 font-medium">RPE</th>

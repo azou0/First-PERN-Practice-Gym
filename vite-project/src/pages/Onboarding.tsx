@@ -86,8 +86,8 @@ export default function Onboarding() {
     };
 
     
-    setError(null);
-    setIsGenerating(true);
+    //setError(null);
+    //setIsGenerating(true);
 
     try {
         await saveProfile(profile);
